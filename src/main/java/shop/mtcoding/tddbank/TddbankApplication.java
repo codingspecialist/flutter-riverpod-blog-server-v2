@@ -16,13 +16,6 @@ import shop.mtcoding.tddbank.user.UserRepository;
 @SpringBootApplication
 public class TddbankApplication {
 
-
-    @GetMapping("/tdd")
-    public String tdd(@AuthenticationPrincipal CustomUserDetails userDetails){
-        System.out.println(userDetails.getUser().getFullName());
-        return userDetails.getUsername();
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(TddbankApplication.class, args);
     }

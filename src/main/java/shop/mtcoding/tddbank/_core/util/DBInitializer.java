@@ -27,8 +27,8 @@ public class DBInitializer {
 
         return (args) -> {
             List<User> users = new ArrayList<>();
-            users.add(User.builder().username("ssar").password(passwordEncoder.encode("1234")).email("ssar@nate.com").build());
-            users.add(User.builder().username("cos").password(passwordEncoder.encode("1234")).email("cos@nate.com").build());
+            users.add(User.builder().username("ssar").password(passwordEncoder.encode("1234")).email("ssar@nate.com").roles("ROLE_USER").build());
+            users.add(User.builder().username("cos").password(passwordEncoder.encode("1234")).email("cos@nate.com").roles("ROLE_USER").build());
             userRepository.saveAll(users);
 
             List<Post> posts = new ArrayList<>();

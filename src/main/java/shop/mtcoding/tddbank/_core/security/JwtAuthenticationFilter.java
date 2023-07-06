@@ -39,7 +39,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         String jwt = prefixJwt.replace(JwtTokenProvider.TOKEN_PREFIX, "");
         try {
             DecodedJWT decodedJWT = JwtTokenProvider.verify(jwt); // 신원인증 끝
-            Long id = decodedJWT.getClaim("id").asLong();
+            Integer id = decodedJWT.getClaim("id").asInt();
             String roles = decodedJWT.getClaim("role").asString();
 
             User user = User.builder().id(id).roles(roles).build();

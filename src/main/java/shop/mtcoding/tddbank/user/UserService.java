@@ -55,19 +55,19 @@ public class UserService {
 		return userRepository.findAll(Sort.by(Sort.Direction.DESC, "id")).stream().map(UserResponse.DetailDTO::new).collect(Collectors.toList());
 	}
 
-	public User 회원정보보기(Integer id) {
-		return userRepository.findById(id).orElseThrow(
+	public UserResponse.DetailDTO 회원정보보기(Integer id) {
+		return new UserResponse.DetailDTO(userRepository.findById(id).orElseThrow(
 				()-> new Exception404("해당 id의 유저는 존재하지 않습니다 : "+id)
-		);
+		));
 	}
 	
 	@Transactional
-	public User 회원수정(Integer id, User user) {
+	public UserResponse.DetailDTO 회원수정(Integer id, User user) {
 		User userPS = userRepository.findById(id).orElseThrow(
 				()-> new Exception404("해당 id의 유저는 존재하지 않습니다 : "+id)
 		);
 		userPS.setPassword(user.getPassword());
 		userPS.setEmail(user.getEmail());
-		return userPS;
+		return new UserResponse.DetailDTO(userPS);
 	} // 더티 체킹
 }
