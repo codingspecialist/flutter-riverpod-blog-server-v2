@@ -10,6 +10,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import shop.mtcoding.tddbank._core.erros.exception.Exception401;
+import shop.mtcoding.tddbank._core.util.FilterResponseUtils;
 import shop.mtcoding.tddbank.user.User;
 
 import javax.servlet.FilterChain;
@@ -49,13 +51,13 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
                             myUserDetails.getAuthorities()
                     );
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            log.debug("디버그 : 인증 객체 만들어짐");
+            chain.doFilter(request, response);
         } catch (SignatureVerificationException sve) {
+            FilterResponseUtils.unAuthorized(response, new Exception401(sve.getMessage()));
             log.error("토큰 검증 실패");
         } catch (TokenExpiredException tee) {
+            FilterResponseUtils.unAuthorized(response, new Exception401(tee.getMessage()));
             log.error("토큰 만료됨");
-        } finally {
-            chain.doFilter(request, response);
         }
     }
 }
